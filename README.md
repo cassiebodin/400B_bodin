@@ -1,2 +1,2 @@
 # 400B_bodin
-Astr400b classwork
+This repository will contain the homework and assignments for the class Astr400B.
