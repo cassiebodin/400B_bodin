@@ -6,7 +6,6 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
 from scipy.integrate import quad # For integration
 # Documentation and examples for quad : 
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html
@@ -106,8 +105,10 @@ matplotlib.rcParams['ytick.labelsize'] = label_size
 legend = ax.legend(loc='upper right',fontsize='x-large')
 
 # Save to a file
-ax.set_rasterized(True)
-plt.savefig('Schechter.eps', rasterized=True, dpi=350)
+#ax.set_rasterized(True)
+#plt.savefig('Schechter.eps', rasterized=True, dpi=350)
+
+plt.show()
 
 
 # ## Part B: IMF 
