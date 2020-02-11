@@ -1,5 +1,6 @@
 
 
+
 # ASTR 400 B 
 # In Class Lab 2
 
@@ -28,12 +29,13 @@ from scipy.integrate import quad # For integration
 #  $\alpha$ =  -0.81 
 # 
 # 
-#   M$_\ast$ =  M$_k^\ast$= -23.19  + 5*log($h$)
+#   M$_\ast$ =  M$_k^\ast$= -23.19  - 5*log($h$)
 #   
 #  $h$ = the Hubble constant in units of 100 km/s/Mpc . At z=0 this is 0.7. But we are going to ignore it here. Units will then be in "comoving" coordinates.
 #   
 #   This function is defined for you below:
 
+# In[ ]:
 
 
 # Function for the Schechter Luminosity function (in terms of Magnitude)
@@ -42,11 +44,11 @@ def Schechter(M,phistar=0.0166,Mstar=-23.19,alpha=-0.81):
 # phistar, number density of galaxies (normalization)
 #              0.0166*h^3 Mpc^-3  defaults from Smith+2009 in Kband
 # Mstar (Knee of the Schechter Fxn):
-#           -23.19  defaults from Smith+2009 in Kband
+#           -23.19 - 5*log(h) defaults from Smith+2009 in Kband
 # alpha (Slope of the Fxn) 
 #             -0.81 defaults from Smith+2009 in Kband
 # Returns: number density of galaxies (comoving units) at that magnitude M.
-    return 0.4*np.log(10)*phistar*10**(0.4*(Mstar - M)*(alpha +1.0))*np.exp(-10**(0.4*(Mstar - M)))
+    return 0.4*np.log(10)*nstar*10**(0.4*(Mstar - M)*(alpha +1.0))*np.exp(-10**(0.4*(Mstar - M)))
 
 
 # # Q1 
@@ -79,8 +81,8 @@ def Schechter(M,phistar=0.0166,Mstar=-23.19,alpha=-0.81):
 
 # Plot the Schechter Function
 
-fig = plt.figure(figsize=(10,10))
-ax = plt.subplot(111)
+fig = plt.figure(figsize=(10,10))  # sets the scale of the figure
+ax = plt.subplot(111) 
 
 # Plot the default values (y axis log)
 # ADD HERE
@@ -108,12 +110,53 @@ legend = ax.legend(loc='upper right',fontsize='x-large')
 #ax.set_rasterized(True)
 #plt.savefig('Schechter.eps', rasterized=True, dpi=350)
 
-plt.show()
+
+# # Q3
+# 
+# Build a function to compute the Schechter Function in terms of luminosity.
+# 
+# Use `quad` to determine the fraction of the luminosity that lies above L* in the following three cases:  $\alpha$=-0.7 (default), $\alpha$=-0.6, $\alpha$=1.85. 
+# 
+# 
+# Schecheter Function $\Phi(L) = \frac{n_\ast}{L_\ast} (\frac{L}{L_\ast})  ^{\alpha}  e^{-L/L_\ast}$
+# 
+# $n_\ast$ = 0.008  $h^3$ Mpc$^{-3}$
+# 
+# $L_\star = 1.4 \times 10^{10} L_\odot$
+
+# In[1]:
+
+
+# Understanding lambda functions
+# Short cut -- defines and evaluates a function in one line ! 
+
+# lambda says that a function follows, where the variables are a and b, and the function to be evaluated is a*b
+x = lambda a, b : a * b
+print(x(5, 6))
+
+
+# In[16]:
+
+
+# Example Usage of quad and lambda
+
+print(quad(np.sin, 0, np.pi))
+
+
+f = lambda x: np.sin(x)
+print(quad(f, 0, np.pi))
+# first element quad is the integral, second element is the error
+
+
+def ex(x):
+    return np.sin(x) 
+
+print(quad(lambda x: ex(x), 0, np.pi))
 
 
 # ## Part B: IMF 
 # 
-# Create a function called {\it Salpeter} that defines the Salpeter IMF: 
+# Create a function called `Salpeter` that defines the Salpeter IMF: 
 # 
 # \begin{equation}
 # \xi(M) = \xi_0 (M/M_\odot)^{-\alpha}
@@ -124,7 +167,9 @@ plt.show()
 # You will need to determine the normalization, $\xi_0$, by integrating this equation over mass from 0.1 to 120 M$_\odot$
 # and setting the value to 1.  The function should then return $\xi(M)$, which will now represent the fractional number of stars. 
 # 
-# Integration: quad(lambda x:  fxn(x),xmin,xmax)
+# Integration:
+# 
+# `quad(lambda x:  fxn(x),xmin,xmax)`
 # 
 # quad returns an array with 2 values. you want the first value. 
 # Note I've used a "lambda" expression.   Python's lambda expressions allow a function to be created and passed around all in one line of code
