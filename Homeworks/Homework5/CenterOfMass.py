@@ -278,9 +278,9 @@ print("M33 COM Velocity is", M33_COMV)
 
 # #### Answer:
 # 
-# MW COM Position is [-0.87  2.39 -1.42] kpc
+# MW COM Position is [-2.07  2.95 -1.45] kpc
 # 
-# MW COM Velocity is [-0.47  3.41 -1.33] km / s
+# MW COM Velocity is [0.94  6.32 -1.35] km / s
 # 
 # 
 # M31 COM Position is [-377.66  611.43 -284.64] kpc
