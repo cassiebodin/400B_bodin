@@ -153,7 +153,7 @@ class CenterOfMass:
         # return the COM positon vector
         # set the correct units using astropy                                                                      
         # round all values 
-        return np.round(COMP,2)*u.kpc
+        return np.round(COMP,2)
     
     
 
@@ -163,12 +163,12 @@ class CenterOfMass:
         # returns 3D Vector of COM Velocities
         
         # the max distance from the center that we will use to determine the center of mass velocity                   
-        RVMAX = 15.0*u.kpc
+        RVMAX = 15.0
 
         # determine the position of all particles relative to the center of mass position                              
-        xV = self.x[:]*u.kpc - COMX
-        yV = self.y[:]*u.kpc - COMY
-        zV = self.z[:]*u.kpc - COMZ
+        xV = self.x[:] - COMX
+        yV = self.y[:] - COMY
+        zV = self.z[:] - COMZ
         RV = np.sqrt(xV**2 + yV**2 + zV**2)
         
         # determine the index for those particles within the max radius                                                
@@ -191,7 +191,7 @@ class CenterOfMass:
         # return the COM vector  
         # set the correct units using astropy                                                                          
         # round all values   
-        return np.round(COMV,2)*u.km/u.s
+        return np.round(COMV,2)
 
 
 
