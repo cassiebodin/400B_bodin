@@ -17,7 +17,7 @@ import matplotlib
 
 # my modules
 from ReadFile import Read
-from CenterOfMass import CenterOfMass
+from CenterOfMass2 import CenterOfMass
 
 
 # Gravitational Constant
@@ -67,7 +67,7 @@ class MassProfile:
         COM = CenterOfMass(self.filename,2)
         # Store the COM position of the galaxy
         # Set Delta = whatever you determined to be a good value in Homework 4.
-        GalCOMP = COM.COM_P(0.1)
+        GalCOMP = COM.COM_P(0.1,2)
             
         # create an array to store indexes of particles of desired Ptype                                                
         index = np.where(self.data['type'] == ptype)
