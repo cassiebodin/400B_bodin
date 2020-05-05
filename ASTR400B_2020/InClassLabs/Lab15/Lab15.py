@@ -1,11 +1,10 @@
 
-
 # # Lab 15 Template              
 # 
 # Proving that the SNe data is consistent with the BenchMark Cosmology.
 # 
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np
@@ -18,7 +17,7 @@ from astropy.constants import c
 from Lab14 import CosmologicalTools
 
 
-# In[2]:
+# In[ ]:
 
 
 
@@ -32,7 +31,7 @@ OmegaL0_planck = 0.692  # Dark Energy Density Parameter
 h_planck = 0.6781   # Hubble Constant  100 h km/s/Mpc
 
 
-# In[3]:
+# In[ ]:
 
 
 # Define the Einstein-DeSitter cosmology (Matter Dominated)
@@ -42,7 +41,7 @@ OmegaLD = 0
 # h is the same = h_planck
 
 
-# In[4]:
+# In[ ]:
 
 
 BenchMark = CosmologicalTools(OmegaM0_planck,OmegaR0_planck,OmegaL0_planck,h_planck)
@@ -64,7 +63,7 @@ DeSitter = CosmologicalTools(OmegaMD,OmegaRD,OmegaLD,h_planck)
 # 
 # Lets simply open the file and print out the first 10 lines to see how the file is formatted:
 
-# In[5]:
+# In[ ]:
 
 
 with open('SNeData.txt', 'r') as infile:
@@ -93,7 +92,7 @@ with open('SNeData.txt', 'r') as infile:
 # $$
 # \begin{split}
 # m-M &= - 2.5 \log_{10} \left(\frac{1}{F_0}\frac{L}{4\pi d^2}\right) + 2.5 \log_{10}\left(\frac{1}{F_0}\frac{L}{4\pi(10\ \textrm{pc})^2}\right)  \\
-# &= 5 \log_{10}\left(\frac{d_L}{10\ \textrm{pc}}\right)
+# &= 5 \log_{10}\left(\frac{d}{10\ \textrm{pc}}\right)
 # \end{split}
 # $$
 # Because $M$ and $m$ are logarithmic functions, their difference is proportional to the *ratio* of the distance $d$ to 10 pc.
@@ -102,7 +101,7 @@ with open('SNeData.txt', 'r') as infile:
 # 
 # $$ d_L = 10^{(m-M)/5 +1} \textrm{pc} $$
 
-# In[6]:
+# In[ ]:
 
 
 def Distance_fromMod(mod):
@@ -111,30 +110,17 @@ def Distance_fromMod(mod):
 # returns Luminosity Distance in Mpc 
 
 ## FILL THIS IN 
-    return 10**((mod)/5 + 1)*u.pc.to(u.Mpc)
+    return 
 
 
-# In[7]:
+# In[ ]:
 
 
 # Read the file in and store the values using `npgenfromtxt`
 
-data = np.genfromtxt('SNeData.txt',names=True,skip_header=2)
 
 
-# In[9]:
-
-
-data['z'][0]
-
-
-# In[10]:
-
-
-data['DistMod'][0]
-
-
-# In[11]:
+# In[ ]:
 
 
 # Create a plot of Distance Modulus Vs. Redshift
@@ -142,54 +128,45 @@ data['DistMod'][0]
 plt.rcParams["figure.dpi"] = 120
 
 
-plt.plot(data['z'],data['DistMod'],'b.')
-
-
 # plt.plot(## , ## 'b.')
 plt.xlabel('redshift')
 plt.ylabel('m-M')
-
 plt.show()
+
+
 # # Part B
 # 
 # Now let's form an actual distance in mega-parsecs (Mpc) from the distance modulus and a velocity in km/second from the redshifts
 
-# In[15]:
+# In[ ]:
 
 
-# Use Distance Modulus (from the data) to determine the luminosity distance to each supernova
-
-LD = Distance_fromMod(data['DistMod'])
+# Use Distance Modulus to determine the luminosity distance to each supernova
 
 
-# In[13]:
+# In[ ]:
 
 
 # Determine the recessional speed based on the redshift
 # v = c *z  Relativistic Doppler Shift
 # c, speed of light, is currently in m/s need it to be in km/s 
 
-VR = c.to(u.km/u.s)*data['z']
-
 
 # and plot distance versus velocity just for the "nearby" supernovae, those within 200 Mpc of Earth. We can select the set of indices of the nearby supernovae using the `numpy.where` function
 
-# In[16]:
+# In[ ]:
 
 
 # Create an index for the nearby supernovae
-near = np.where(LD < 200)
 
 
-# In[18]:
+# In[ ]:
 
 
 # get the number of nearby supernovae
-Nnear = len(near[0])
-Nnear
 
 
-# In[19]:
+# In[ ]:
 
 
 # Plot the Luminosity Distance vs. Recessional Speed for all nearby Supernovae
@@ -197,18 +174,18 @@ Nnear
 plt.rcParams["figure.dpi"] = 120
 
 # Fill this in 
-plt.plot(VR[near],LD[near] ,'.')
+# plt.plot(##, ## ,'.')
 
 plt.xlabel('velocity [km/s]')
 plt.ylabel('distance [Mpc]')
-
-# Fill this in :   Add a relevant title
-plt.title(f"{Nnear} nearest supernovae within 200 Mpc")
-
 plt.show()
+# Fill this in :   Add a relevant title
+# plt.title(f"{ ### } nearest supernovae within 200 Mpc")
+
+
 # This looks more or less like a linear relationship. If we plot this model atop the data, we see
 
-# In[20]:
+# In[ ]:
 
 
 # Create a linear model
@@ -219,49 +196,21 @@ modelLD = VR/BenchMark.Ho
 # this line is equivalently = t_age * VR[near] --> constant expansion over time.
 
 
-# In[21]:
+# In[ ]:
 
 
 # Recreate the plot, now including the linear model
 # FILL THIS IN 
 
 
-plt.rcParams["figure.dpi"] = 120
-
-# Fill this in 
-plt.plot(VR[near],LD[near] ,'b.')
-plt.plot(VR[near],modelLD[near],'r')
-
-
-plt.xlabel('velocity [km/s]')
-plt.ylabel('distance [Mpc]')
-
-# Fill this in :   Add a relevant title
-plt.title(f"{Nnear} nearest supernovae within 200 Mpc")
-plt.show()
-
 # 
 # Let's now try plotting the whole dataset, which extends to distances far beyond what Hubble could have measured in his day
 
-# In[22]:
+# In[ ]:
 
 
 # Plot the whole data set. Not just the nearby Sne. 
 # FILL THIS IN 
-
-
-plt.rcParams["figure.dpi"] = 120
-
-# Fill this in 
-plt.plot(VR,LD ,'b.')
-plt.plot(VR,modelLD,'r')
-
-
-plt.xlabel('velocity [km/s]')
-plt.ylabel('distance [Mpc]')
-plt.show()
-# Fill this in :   Add a relevant title
-#plt.title(f"{Nnear} nearest supernovae within 200 Mpc")
 
 
 # The distant supernovae are moving more slowly than a constant Ho would predict...
@@ -282,7 +231,7 @@ plt.show()
 # 
 # But instead we're going to use our own code ! 
 
-# In[23]:
+# In[ ]:
 
 
 # modelLD assumed a linear expansion v * t_age of the universe
@@ -295,42 +244,29 @@ plt.show()
 zvec = np.linspace(0.01,1.1*max(data['z']),100)  
 
 
-# In[24]:
+# In[ ]:
 
 
 ## Compute the corresponding recessional velocities
 vr_vec = zvec*c.to(u.km/u.s)
 
 
-# In[27]:
+# In[ ]:
 
 
 ## Compute the Luminosity Distance at each redshift  in the BenchMark and Einstein-DeSitter Universes.
 
-modelLD_Bench = [BenchMark.LuminosityDistance(i).value for i in zvec]
-modelLD_DeSitter = [DeSitter.LuminosityDistance(i).value for i in zvec]
 
 
-# In[30]:
+
+# In[ ]:
 
 
 ## Plot the New models on top of the data. 
 ## FILL THIS IN
 
-plt.rcParams["figure.dpi"] = 120
 
-# Fill this in 
-plt.plot(VR,LD ,'b.', label='data')
-plt.plot(VR, modelLD,'r', label='Linear')
-plt.plot(vr_vec, modelLD_Bench, 'orange', label='BenchMark' )
-plt.plot(vr_vec, modelLD_DeSitter, 'c', label='Einstein-DeSitter' )
 
-plt.xlabel('velocity [km/s]')
-plt.ylabel('distance [Mpc]')
-
-plt.legend()
-
-plt.show()
 # # Part D
 # We can characterize how well the model fits the data by computing the  "$\chi^2$" of the model with respect to the data
 # 
@@ -338,44 +274,37 @@ plt.show()
 # 
 # Let's write a function to do this:
 
-# In[31]:
+# In[ ]:
 
 
 def chi2(model, data):
     # Function that computes Chi^2
-    # Input:  model and data
-    deviation = model - data
-    sigma2 = np.sum(deviation**2)/(len(data)-1)
-    sigma = np.sqrt(sigma2)
+
     return sigma
 
 
 # The $\chi^2$ of our linear model is then
 
-# In[35]:
+# In[ ]:
 
 
-chi2(modelLD.value, LD)
+
 
 
 # The $\chi^2$ of our Einstein-DeSitter Luminosity Distance model is then
 
-# In[40]:
+# In[ ]:
 
 
-modelLD2_DeSitter = [DeSitter.LuminosityDistance(i).value for i in data['z']]
 
-chi2(modelLD2_DeSitter, LD)
 
 
 # The $\chi^2$ of our BenchMark model is then
 
-# In[41]:
+# In[ ]:
 
 
-modelLD2_BenchMark = [BenchMark.LuminosityDistance(i).value for i in data['z']]
 
-chi2(modelLD2_BenchMark, LD)
 
 
 # ![title](cosmology.png)
