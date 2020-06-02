@@ -1,5 +1,5 @@
 # AstrophysicsGalaxiesCosmology_Astr400B
-### This repository will contain all work for the Astr400B, a class on Cosmology and Galaxy Evolution.
+### This repository will contain all work for the Astr400B, a class on Cosmology and Galaxy Evolution. *Jan 2020-May 2020*
 
 "ASTR400B_2020" is linked to a github repository created by the teacher, Professor Gurtina Besla, which contains all assignments and sample code. 
 
